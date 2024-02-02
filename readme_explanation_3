@@ -1,0 +1,29 @@
+import React from 'react'
+
+// Your task is to explain why count value is not updated to 3 as expected
+function App() {
+  const [count, setCount] = React.useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+		console.log(count);
+  };
+
+  return (
+    <div>
+      <p>Button is clicked {count} times</p>
+      <button onClick={handleClick}>Click Me</button>
+    </div>
+  );
+}
+
+export default App
+
+
+
+
+The reason the count value is not updated to 3 as expected is due to the asynchronous nature of the setCount function in React's useState. When you call setCount, React schedules an update to the component state, but it doesn't immediately apply the update.
+
+In your handleClick function, you're calling setCount three times consecutively, and each time you're using the current value of count. However, since the state updates are asynchronous, all three calls are using the initial value of count (which is 0 in this case).
