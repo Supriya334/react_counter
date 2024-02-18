@@ -1,22 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Timer.jsx
+import React, { useState, useEffect } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const Timer = () => {
+  const [count, setCount] = useState(10);
 
-function Inc(){
-  setCount(count+1)
-}
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const resetTimer = () => {
+    setCount(10);
+  };
+
+  const pauseTimer = () => {
+    clearInterval(intervalId);
+  };
+
+  const resumeTimer = () => {
+    const intervalId = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
+  };
 
   return (
+    <div>
+      <h2>Timer: {count}</h2>
+      <button onClick={resetTimer}>Reset</button>
+      <button onClick={pauseTimer}>Pause</button>
+      <button onClick={resumeTimer}>Resume</button>
+    </div>
+  );
+};
 
-    <>
-      <h1>{count}</h1>
-      <button onClick={Inc}>Increase Count</button>
-    </>
-  )
-}
-
-export default App
+export default Timer;
